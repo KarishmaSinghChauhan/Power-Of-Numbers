@@ -1,4 +1,4 @@
-# PowerOfNumbers
+# Power Of Numbers
 
 (This is a clone for the popular game - 2048.)
 
