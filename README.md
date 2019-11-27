@@ -1,4 +1,4 @@
-# Project-8-PowerOfNumbers
+# PowerOfNumbers
 
 (This is a clone for the popular game - 2048.)
 
