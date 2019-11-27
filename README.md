@@ -1,5 +1,7 @@
 # Project-8-PowerOfNumbers
 
+(This is a clone for the popular game - 2048.)
+
 Language used - Java.
 
 Movements - Up, Down, Left, Bottom.
