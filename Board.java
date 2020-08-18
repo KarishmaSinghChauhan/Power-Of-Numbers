@@ -41,6 +41,7 @@ public class Board {
 	    // Check if gameover (if no more moves can be made).
 	    int flag1 = 0; 
 	    for (int i=0 ; i<boardsize ; i++) {
+	    	flag1 = 0;
 	    	for (int j=0 ; j<boardsize ; j++) {
 	    		if (board[i][j] == 0 || (j != boardsize-1 && board[i][j] == board[i][j+1])) {
 	    			flag1 = 1;
@@ -51,15 +52,11 @@ public class Board {
 	    	if (flag1 == 0) {
 	    		break;
 	    	}
-	    	else {
-	    		if (i != boardsize-1) {
-	    			flag1 = 0;
-	    		}
-	    	}
 	    }
 	    
 	    int flag2 = 0; 
 	    for (int j=0 ; j<boardsize ; j++) {
+	    	flag2 = 0;
 	    	for (int i=0 ; i<boardsize ; i++) {
 	    		if (board[i][j] == 0 || (i != boardsize-1 && board[i][j] == board[i+1][j])) {
 	    			flag2 = 1;
@@ -69,11 +66,6 @@ public class Board {
 	    	
 	    	if (flag2 == 0) {
 	    		break;
-	    	}
-	    	else {
-	    		if (j != boardsize-1) {
-	    			flag2 = 0;
-	    		}
 	    	}
 	    }
 	    
@@ -85,7 +77,9 @@ public class Board {
 	    for(int i=0 ; i < boardsize ; i++) {
 	    	for(int j=0 ; j < boardsize-1 ; j++) {
 			    // Whenever 2048 is not made and there are still matching numbers in consecutive columns in same row, left Game is Incomplete. 
-				return INCOMPLETE;
+	    		if(board[i][j] == board[i][j+1]) {
+					return INCOMPLETE;
+				}
 			}
 		}
 	    
@@ -137,6 +131,7 @@ public class Board {
 		int flag = 1;
 		
 		for(int i = 0; i<= boardsize-1; i++) {
+			flag = 1;
 			for(int j = 0; j<= boardsize-1;j++) {
 				if(board[i][j] == 0 || (j != boardsize-1 && board[i][j] == board[i][j+1])) {	
 					flag = 0;
@@ -148,9 +143,6 @@ public class Board {
 				// Move is invalid.
 				InvalidMoveException e = new InvalidMoveException();
 				throw e;
-			}
-			else {
-				flag = 1;
 			}	
 		}
 				
@@ -159,12 +151,13 @@ public class Board {
         // Check if there is a row in which either matching number is found or empty cell(i,k) before non empty cell(i,j)
         for(int i=0 ; i<boardsize ; i++) {
 			for(int j=1 ; j<boardsize ; j++) {
-				if((board[i][k] == board[i][j] ) || (board[i][k] == 0 && board[i][j]!=0)) {
+				if((board[i][k] == board[i][j] ) || (board[i][k] == 0)) { //  && board[i][j]!=0)) {
 					board[i][k] += board[i][j];
 					board[i][j] = 0;
 				}
 
 				k++;
+				// Basically k = j-1 
 			}
 			
 			k = 0;
@@ -177,6 +170,7 @@ public class Board {
     	int flag = 1;
 		
 		for(int i = 0; i<= boardsize-1; i++) {
+			flag = 1;
 			for(int j = 0; j<= boardsize-1;j++) {
 				if(board[i][j] == 0 || (j != boardsize-1 && board[i][j] == board[i][j+1])) {
 					flag = 0;
@@ -189,9 +183,6 @@ public class Board {
 				InvalidMoveException e = new InvalidMoveException();
 				throw e;
 			}
-			else {
-				flag = 1;
-			}
 		}
 			
         int k = boardsize-1;
@@ -199,7 +190,7 @@ public class Board {
         // Check if there is a row in which either matching number is found or empty cell(i,k) before non empty cell(i,j).
         for(int i=0 ; i<boardsize ; i++) {
 			for(int j=k-1 ; j>=0 ;j-- ) {
-				if(((board[i][k] == board[i][j])) || ((board[i][k] == 0) && (board[i][j] != 0))) {
+				if(((board[i][k] == board[i][j])) || ((board[i][k] == 0))) { // && (board[i][j] != 0))) {
 					board[i][k] += board[i][j];
 					board[i][j] = 0;
 				}
@@ -217,6 +208,7 @@ public class Board {
     	int flag = 1; 
 		
 		for(int i = 0; i<= boardsize-1; i++) {
+			flag = 1;
 			for(int j = 0; j<= boardsize-1;j++) {
 				if(board[j][i] == 0 || (j != boardsize-1 && board[j][i] == board[j+1][i])) {
 					flag = 0;
@@ -229,9 +221,6 @@ public class Board {
 				InvalidMoveException e = new InvalidMoveException();
 				throw e;
 			}
-			else {
-				flag = 1;
-			}	
 		}
 			
 		int k = 0;
@@ -239,12 +228,13 @@ public class Board {
         // Check if there is a column in which either matching number is found or empty cell(k,i) before non empty cell(j,i).
         for(int i=0 ; i<boardsize ; i++) {
 			for(int j=1 ; j<boardsize ; j++) {
-				if((board[k][i] == board[j][i]) || (board[k][i] == 0 && board[j][i]!=0)) {
+				if((board[k][i] == board[j][i]) || (board[k][i] == 0)) {//  && board[j][i]!=0)) {
 					board[k][i] += board[j][i];
 					board[j][i] = 0;
 				}
 				
 				k++;
+				// Basically k = j-1 
 			}
 			
 			k = 0;
@@ -257,6 +247,7 @@ public class Board {
 		int flag = 1;
 		
 		for(int i = 0; i<= boardsize-1; i++) {
+			flag = 1;
 			for(int j = 0; j<= boardsize-1;j++) {
 				if(board[j][i] == 0 || (j != boardsize-1 && board[j][i] == board[j+1][i])) {
 					flag = 0;
@@ -269,9 +260,6 @@ public class Board {
 				InvalidMoveException e = new InvalidMoveException();
 				throw e;
 			}
-			else {
-				flag = 1;
-			}
 		}
 		
 		int k=boardsize-1;
@@ -279,7 +267,7 @@ public class Board {
 		// Check if there is a column in which either matching number is found or empty cell(k,i) before non empty cell(j,i).
 		for(int i=0 ; i<boardsize ; i++) {
 			for(int j=k-1 ; j>=0 ; j--) {
-				if((board[k][i] == board[j][i] ) || (board[k][i] == 0 && board[j][i]!=0)) {
+				if((board[k][i] == board[j][i] ) || (board[k][i] == 0)) {// && board[j][i]!=0)) {
 					board[k][i] += board[j][i];
 					board[j][i] = 0;
 				}
